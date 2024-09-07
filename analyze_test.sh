@@ -1,15 +1,20 @@
 #!/bin/bash
 
-# 检查是否提供了足够的参数
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <image-file>"
-    exit 1
-fi
+# 指定图片所在的目录
+INPUT_DIR="/root/git/3rd_CICID_project/images"
 
-INPUT_IMAGE=$1
-OUTPUT_IMAGE=$(basename "$INPUT_IMAGE" .png)_processed.png
+# 指定Python脚本的路径
+PYTHON_SCRIPT="/root/git/3rd_CICID_project/python_test.py"
 
-# 使用Python处理图片
-python3 /path/to/your/image_processing_script.py "$INPUT_IMAGE" "$OUTPUT_IMAGE"
-
-echo "Processed image saved as $OUTPUT_IMAGE"
+# 遍历目录中的所有.png文件
+for INPUT_IMAGE in "$INPUT_DIR"/*.png; do
+    if [ -f "$INPUT_IMAGE" ]; then
+        # 生成输出文件名
+        OUTPUT_IMAGE="${INPUT_IMAGE%.*}_processed.png"
+        
+        # 使用Python处理图片
+        python3 "$PYTHON_SCRIPT" "$INPUT_IMAGE" "$OUTPUT_IMAGE"
+        
+        echo "Processed image saved as $OUTPUT_IMAGE"
+    fi
+done

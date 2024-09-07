@@ -1,14 +1,17 @@
 from PIL import Image
 import sys
 
-input_image = sys.argv[1]
-output_image = sys.argv[2]
-
-# 打开图像文件
-with Image.open(input_image) as img:
-    # 转换为灰度图像
-    img_gray = img.convert('L')
+def process_image(input_path, output_path):
+    img = Image.open(input_path)
+    # 转换为灰度图像，并保留alpha通道
+    img_gray = img.convert('LA')
     # 保存处理后的图像
-    img_gray.save(output_image)
+    img_gray.save(output_path)
 
-print(f"Image processed and saved as {output_image}")
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python3 process_image.py <input> <output>")
+        sys.exit(1)
+    
+    input_path, output_path = sys.argv[1], sys.argv[2]
+    process_image(input_path, output_path)
