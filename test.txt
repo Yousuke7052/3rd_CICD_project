@@ -1,3 +1,4 @@
+Hello World!
 This is a test text file.
 It contains some words and characters to be counted.
 Here is an example of what the script will process.
